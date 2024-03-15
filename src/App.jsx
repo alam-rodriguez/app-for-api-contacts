@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import InputText from "./components/inputText";
+import Button from "./components/Button";
 
 function App() {
   const [name, setName] = useState("");
@@ -7,18 +9,17 @@ function App() {
   const [email, setEmail] = useState("");
 
   const [contacts, setContacts] = useState([]);
-  // const [contactsRequired, setContactsRequired] = useState([]);
 
   useEffect(() => {
-    // const f = async () => {
-    //   const response = await fetch("https://contact-api-zeta.vercel.app/contacts");
-    //   if (response.status != 200) return;
-    //   const data = await response.json();
-    //   setContacts(data);
-    // };
-    // f();
     searchContacts();
   }, []);
+
+  const peticion = async (url) => {
+    const response = await fetch(url);
+    if (response.status == 404) return setContacts([]);
+    const data = await response.json();
+    setContacts(data);
+  };
 
   const searchContacts = async () => {
     let url = "https://contact-api-zeta.vercel.app/contacts?";
@@ -28,57 +29,61 @@ function App() {
     if (phone != 0) url = url.concat(`&phone=${phone}`);
     if (email != "") url = url.concat(`&email=${email}`);
     console.log(url);
-    const response = await fetch(url);
-    if (response.status == 404) return setContacts([]);
-    const data = await response.json();
-    setContacts(data);
+    peticion(url);
+    // const response = await fetch(url);
+    // if (response.status == 404) return setContacts([]);
+    // const data = await response.json();
+    // setContacts(data);
   };
 
   const handleName = (e) => setName(e.target.value);
   const handlePhone = (e) => setPhone(e.target.value);
   const handleEmail = (e) => setEmail(e.target.value);
 
+  const resetContacts = () => {
+    setName("");
+    setPhone(0);
+    setEmail("");
+    peticion("https://contact-api-zeta.vercel.app/contacts");
+  };
+
   return (
-    <main className="w-2/4 m-auto">
-      <p className="text-center text-5xl mt-10">Contact app</p>
+    <main className="m-auto container">
+      <p className="text-center text-6xl mt-10 font">Contact app</p>
 
-      <table className="table-auto mx-auto mt-12 text-2xl">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>numero</th>
-            <th>email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {contacts.map((contact, i) => (
-            <tr key={i}>
-              <td>{contact.firstName}</td>
-              <td>{contact.lastName}</td>
-              <td>{contact.phone}</td>
-              <td>{contact.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="bg-gray-300 p-3 rounded-md mt-10">
+        <div className="flex justify-between">
+          <p className="w-1/4 text-xl font-semibold">Nombre</p>
+          <p className="w-1/4 text-xl font-semibold">Apellido</p>
+          <p className="w-1/4 text-xl font-semibold">Numero</p>
+          <p className="w-1/4 text-xl font-semibold">Email</p>
+        </div>
+      </div>
 
-      <div className="mt-40">
-        <div className="mt-4">
-          <input className="text-black" type="text" id="nombre" value={name} onChange={handleName} />
-          <label htmlFor="nombre">Nombre</label>
+      <div className="bg-gray-300 p-3 rounded-md mt-5">
+        {contacts.length > 0 ? (
+          contacts.map((contact, i) => (
+            <div key={i} className="flex justify-between pt-5">
+              <p className="w-1/4 font-medium">{contact.firstName}</p>
+              <p className="w-1/4 font-medium">{contact.lastName}</p>
+              <p className="w-1/4 font-medium">{contact.phone}</p>
+              <p className="w-1/4 font-medium">{contact.email}</p>
+            </div>
+          ))
+        ) : (
+          <p className="text-center text-2xl font-semibold text-orange-900">Sin contactos</p>
+        )}
+      </div>
+
+      <div className="mt-20">
+        <InputText id="nombre" text={name} handleChange={handleName} label="Nombre" placeholder="Nombre" />
+        <InputText id="Numero" text={phone} handleChange={handlePhone} label="Numero" />
+        <InputText id="email" text={email} handleChange={handleEmail} label="Email" />
+
+        <div className="mt-6 flex gap-5">
+          <Button handleClick={searchContacts} text="Buscar" />
+          <Button handleClick={resetContacts} text="Restablecer" />
         </div>
-        <div className="mt-4">
-          <input className="text-black" type="text" id="phone" onChange={handlePhone} value={phone} />
-          <label htmlFor="phone">Numero</label>
-        </div>
-        <div className="mt-4">
-          <input className="text-black" type="text" id="email" value={email} onChange={handleEmail} />
-          <label htmlFor="email">Email</label>
-        </div>
-        <button className="bg-blue-800 py-2 px-5 rounded-full text-2xl" onClick={searchContacts}>
-          Buscar
-        </button>
       </div>
     </main>
   );
