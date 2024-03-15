@@ -48,10 +48,10 @@ function App() {
   };
 
   return (
-    <main className="m-auto container">
+    <main className="m-auto container px-5 mb-10">
       <p className="text-center text-6xl mt-10 font">Contact app</p>
 
-      <div className="bg-gray-300 p-3 rounded-md mt-10">
+      <div className="bg-gray-300 p-3 rounded-sm mt-10">
         <div className="flex justify-between">
           <p className="w-1/4 text-xl font-semibold">Nombre</p>
           <p className="w-1/4 text-xl font-semibold">Apellido</p>
