@@ -1,6 +1,8 @@
 import CreateContact from "./CreateContact";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Home";
+import { useMode } from "../zustand/mode";
+import { useEffect } from "react";
 
 function App() {
   // const [name, setName] = useState("");
@@ -47,14 +49,21 @@ function App() {
   // };
 
   // const goToCreateContact = () => {};
+  const { mode } = useMode();
+
+  useEffect(() => {
+    console.log(mode);
+  }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" Component={Home} />
-        <Route path="/create-contact" Component={CreateContact} />
-      </Routes>
-    </BrowserRouter>
+    <main className={`${mode == "light" ? "light" : "dark"} text-foreground bg-background min-h-screen`}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" Component={Home} />
+          <Route path="/create-contact" Component={CreateContact} />
+        </Routes>
+      </BrowserRouter>
+    </main>
   );
 }
 

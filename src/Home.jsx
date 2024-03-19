@@ -7,7 +7,10 @@ import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input,
 // import { MoonIcon } from "./MoonIcon";
 // import { SunIcon } from "./SunIcon";
 
+import { useMode } from "../zustand/mode";
 function Home() {
+  const { mode, changeMode } = useMode();
+
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState(0);
@@ -17,6 +20,7 @@ function Home() {
 
   useEffect(() => {
     searchContacts();
+    console.log(mode);
   }, []);
 
   const peticion = async (url) => {
@@ -59,10 +63,14 @@ function Home() {
 
   const goToCreateContact = () => navigate("/create-contact");
 
-  const [theme, setTheme] = useState("light");
+  // const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    console.log(mode);
+  }, [mode]);
 
   return (
-    <main className={`${theme == "dark" ? "dark text-foreground bg-background " : ""}m-auto container px-10 py-5`}>
+    <main className="m-auto container px-10 py-5">
       <p className="text-center text-6xl mt-0 font">Contact app</p>
 
       <Table aria-label="Example static collection table" className="mt-10">
@@ -137,10 +145,10 @@ function Home() {
         </div>
       </div>
 
-      <Button className="bg-white text-black" onClick={() => setTheme("light")}>
+      <Button className="bg-white text-black" onClick={() => changeMode("light")}>
         Light Mode
       </Button>
-      <Button className="bg-black text-white" onClick={() => setTheme("dark")}>
+      <Button className="bg-black text-white" onClick={() => changeMode("dark")}>
         Dark Mode
       </Button>
     </main>
