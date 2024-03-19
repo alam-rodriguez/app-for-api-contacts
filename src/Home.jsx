@@ -3,7 +3,9 @@ import "./App.css";
 import InputText from "./components/inputText";
 // import Button from "./components/Button";
 import { useNavigate } from "react-router-dom";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input, Button } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input, Button, Switch } from "@nextui-org/react";
+// import { MoonIcon } from "./MoonIcon";
+// import { SunIcon } from "./SunIcon";
 
 function Home() {
   const navigate = useNavigate();
@@ -57,9 +59,11 @@ function Home() {
 
   const goToCreateContact = () => navigate("/create-contact");
 
+  const [theme, setTheme] = useState("light");
+
   return (
-    <main className="m-auto container px-5 mb-10">
-      <p className="text-center text-6xl mt-10 font">Contact app</p>
+    <main className={`${theme == "dark" ? "dark text-foreground bg-background " : ""}m-auto container px-10 py-5`}>
+      <p className="text-center text-6xl mt-0 font">Contact app</p>
 
       <Table aria-label="Example static collection table" className="mt-10">
         <TableHeader>
@@ -132,6 +136,13 @@ function Home() {
           <Button handleClick={goToCreateContact} text="Crear contacto" /> */}
         </div>
       </div>
+
+      <Button className="bg-white text-black" onClick={() => setTheme("light")}>
+        Light Mode
+      </Button>
+      <Button className="bg-black text-white" onClick={() => setTheme("dark")}>
+        Dark Mode
+      </Button>
     </main>
   );
 }
