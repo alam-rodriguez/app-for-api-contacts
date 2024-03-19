@@ -1,7 +1,9 @@
 import { useState } from "react";
-import InputText from "./components/inputText";
-import Button from "./components/Button";
+// import InputText from "./components/inputText";
+// import Button from "./components/Button";
 import { useNavigate } from "react-router-dom";
+
+import { Input, Button } from "@nextui-org/react";
 
 const CreateContact = () => {
   const navigate = useNavigate();
@@ -75,14 +77,26 @@ const CreateContact = () => {
       </div> */}
 
       <div className="mt-20">
-        <InputText id="nombre" text={firstName} handleChange={handleFirstNameChange} label="Nombre" placeholder="Nombre" />
+        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+          <Input type="text" label="Nombre" value={firstName} onChange={handleFirstNameChange} />
+          <Input type="text" label="Apellido" value={lastName} onChange={handleLastNameChange} />
+          <Input type="number" label="Numero" value={phone} onChange={handlephoneChange} />
+          <Input type="email" label="Email" value={email} onChange={handleemailChange} />
+        </div>
+        {/* <InputText id="nombre" text={firstName} handleChange={handleFirstNameChange} label="Nombre" placeholder="Nombre" />
         <InputText id="apellido" text={lastName} handleChange={handleLastNameChange} label="Apellido" />
         <InputText id="phone" text={phone} handleChange={handlephoneChange} label="Numero" />
-        <InputText id="email" text={email} handleChange={handleemailChange} label="Email" />
+        <InputText id="email" text={email} handleChange={handleemailChange} label="Email" /> */}
 
         <div className="mt-6 flex gap-5">
-          <Button handleClick={handleClickCreateContact} text="Crear contacto" />
-          <Button handleClick={goToHome} text="Ver contactos" />
+          <Button className="bg-red-500 text-white" onClick={handleClickCreateContact}>
+            Crear contacto
+          </Button>
+          <Button className="bg-red-500 text-white" onClick={goToHome}>
+            Ver contactos
+          </Button>
+          {/* <Button handleClick={handleClickCreateContact} text="Crear contacto" />
+          <Button handleClick={goToHome} text="Ver contactos" /> */}
         </div>
       </div>
     </main>
