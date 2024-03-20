@@ -146,7 +146,6 @@ function Home() {
 
       <Switch
         onChange={(e) => (!e.target.checked ? changeMode("light") : changeMode("dark"))}
-        defaultSelected
         size="lg"
         color="success"
         startContent={<Icon icon="ph:sun-fill" />}
@@ -154,13 +153,6 @@ function Home() {
       >
         Dark mode
       </Switch>
-
-      <Button className="bg-white text-black" onClick={() => changeMode("light")}>
-        Light Mode
-      </Button>
-      <Button className="bg-black text-white" onClick={() => changeMode("dark")}>
-        Dark Mode
-      </Button>
     </main>
   );
 }
