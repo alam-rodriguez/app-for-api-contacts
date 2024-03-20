@@ -4,8 +4,7 @@ import InputText from "./components/inputText";
 // import Button from "./components/Button";
 import { useNavigate } from "react-router-dom";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input, Button, Switch } from "@nextui-org/react";
-// import { MoonIcon } from "./MoonIcon";
-// import { SunIcon } from "./SunIcon";
+import { Icon } from "@iconify/react";
 
 import { useMode } from "../zustand/mode";
 function Home() {
@@ -144,6 +143,17 @@ function Home() {
           <Button handleClick={goToCreateContact} text="Crear contacto" /> */}
         </div>
       </div>
+
+      <Switch
+        onChange={(e) => (!e.target.checked ? changeMode("light") : changeMode("dark"))}
+        defaultSelected
+        size="lg"
+        color="success"
+        startContent={<Icon icon="ph:sun-fill" />}
+        endContent={<Icon icon="ph:moon-fill" />}
+      >
+        Dark mode
+      </Switch>
 
       <Button className="bg-white text-black" onClick={() => changeMode("light")}>
         Light Mode
